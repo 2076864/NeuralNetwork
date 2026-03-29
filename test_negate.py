@@ -16,8 +16,8 @@ RUN_MULTI                = False   # Fase 3: (τ_GTSRB + τ_SVHN) × α
 RUN_WEIGHTED             = False   # Fase 4: τ_GTSRB×α1 + τ_SVHN×α2 (alpha indipendenti)
 RUN_NEGATION_GTSRB       = False   # Fase 5: τ_SVHN + (−τ_GTSRB×α)
 RUN_NEGATION_SVHN        = False   # Fase 6: τ_GTSRB + (−τ_SVHN×α)
-RUN_NEGATION_BASE        = False   # Fase 7: negazione pura sul BASE model ← traccia
-RUN_NEGATION_MULTITASK   = False   # Fase 8: negazione selettiva sul MULTI-TASK model ← traccia
+RUN_NEGATION_BASE        = False   # Fase 7: negazione pura sul BASE model 
+RUN_NEGATION_MULTITASK   = False   # Fase 8: negazione selettiva sul MULTI-TASK model 
 # ========================================================
 
 # ========== CONFIG ==========

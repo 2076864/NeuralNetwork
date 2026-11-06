@@ -1,0 +1,680 @@
+python test_negate.py 
+/home/luca/miniconda3/envs/task-vectors/lib/python3.9/site-packages/timm/models/layers/__init__.py:48: FutureWarning: Importing from timm.models.layers is deprecated, please import via timm.layers
+  warnings.warn(f"Importing from {__name__} is deprecated, please import via timm.layers", FutureWarning)
+
+🔄 Caricamento Task Vectors (CPU)...
+/home/luca/Desktop/neuraln/task_vectors/src/task_vectors.py:17: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pretrained_state_dict = torch.load(pretrained_checkpoint).state_dict()
+/home/luca/Desktop/neuraln/task_vectors/src/task_vectors.py:18: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  finetuned_state_dict = torch.load(finetuned_checkpoint).state_dict()
+✅ Task Vectors caricati.
+
+
+=======================================================
+  FASE 0 — BASELINE ZERO-SHOT (nessun task vector)
+=======================================================
+  α             GTSRB     SVHN    GPU Mem
+  ----------------------------------------
+/home/luca/Desktop/neuraln/task_vectors/src/task_vectors.py:52: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pretrained_model = torch.load(pretrained_checkpoint)
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+/home/luca/Desktop/neuraln/task_vectors/src/utils.py:56: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model = torch.load(save_path)
+/home/luca/miniconda3/envs/task-vectors/lib/python3.9/site-packages/torch/utils/data/dataloader.py:617: UserWarning: This DataLoader will create 16 worker processes in total. Our suggested max number of worker in current system is 8, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [34:00<00:00,  5.17s/it]
+Done evaluating on GTSRB. Accuracy: 43.34%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+/home/luca/miniconda3/envs/task-vectors/lib/python3.9/site-packages/torch/utils/data/dataloader.py:617: UserWarning: This DataLoader will create 16 worker processes in total. Our suggested max number of worker in current system is 8, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:57<00:00,  5.16s/it]
+Done evaluating on SVHN. Accuracy: 51.98%
+  α=0.0         43.3%    52.0%     0.46GB
+
+=======================================================
+  FASE 1 — SOLO τ_GTSRB × α
+=======================================================
+  α             GTSRB     SVHN    GPU Mem
+  ----------------------------------------
+/home/luca/Desktop/neuraln/task_vectors/src/task_vectors.py:52: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pretrained_model = torch.load(pretrained_checkpoint)
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+/home/luca/Desktop/neuraln/task_vectors/src/utils.py:56: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model = torch.load(save_path)
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 11.96%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:51<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 19.11%
+  α=-0.5        12.0%    19.1%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 43.34%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 51.98%
+  α=+0.0        43.3%    52.0%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 97.89%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 59.91%
+  α=+0.5        97.9%    59.9%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 99.17%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 55.87%
+  α=+1.0        99.2%    55.9%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 98.61%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 29.73%
+  α=+1.5        98.6%    29.7%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 94.13%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 13.29%
+  α=+2.0        94.1%    13.3%     0.46GB
+
+=======================================================
+  FASE 2 — SOLO τ_SVHN × α
+=======================================================
+  α             GTSRB     SVHN    GPU Mem
+  ----------------------------------------
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 21.19%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 6.50%
+  α=-0.5        21.2%     6.5%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 43.34%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 51.98%
+  α=+0.0        43.3%    52.0%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 47.20%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:53<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 97.00%
+  α=+0.5        47.2%    97.0%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 28.65%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 97.86%
+  α=+1.0        28.7%    97.9%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 14.19%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 97.19%
+  α=+1.5        14.2%    97.2%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 5.08%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:53<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 95.73%
+  α=+2.0         5.1%    95.7%     0.46GB
+
+=======================================================
+  FASE 3 — MULTI-TASK (τ_GTSRB + τ_SVHN) × α
+=======================================================
+  α             GTSRB     SVHN    GPU Mem
+  ----------------------------------------
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 5.43%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 6.37%
+  α=-0.5         5.4%     6.4%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 43.34%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:53<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 51.98%
+  α=+0.0        43.3%    52.0%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:55<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 96.91%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 96.43%
+  α=+0.5        96.9%    96.4%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 93.78%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:53<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 95.60%
+  α=+1.0        93.8%    95.6%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 61.66%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 89.93%
+  α=+1.5        61.7%    89.9%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 24.92%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:53<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 74.11%
+  α=+2.0        24.9%    74.1%     0.46GB
+
+=======================================================
+  FASE 4 — PESATO τ_GTSRB×α1 + τ_SVHN×α2
+=======================================================
+  (α1,  α2)         GTSRB     SVHN    GPU Mem
+  --------------------------------------------
+/home/luca/Desktop/neuraln/task_vectors/src/task_vectors.py:52: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pretrained_model = torch.load(pretrained_checkpoint)
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+/home/luca/Desktop/neuraln/task_vectors/src/utils.py:56: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model = torch.load(save_path)
+/home/luca/miniconda3/envs/task-vectors/lib/python3.9/site-packages/torch/utils/data/dataloader.py:617: UserWarning: This DataLoader will create 16 worker processes in total. Our suggested max number of worker in current system is 8, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:57<00:00,  5.16s/it]
+Done evaluating on GTSRB. Accuracy: 88.82%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+/home/luca/miniconda3/envs/task-vectors/lib/python3.9/site-packages/torch/utils/data/dataloader.py:617: UserWarning: This DataLoader will create 16 worker processes in total. Our suggested max number of worker in current system is 8, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:58<00:00,  5.16s/it]
+Done evaluating on SVHN. Accuracy: 90.96%
+  (0.3, 0.3)        88.8%    91.0%     0.46GB
+/home/luca/Desktop/neuraln/task_vectors/src/task_vectors.py:52: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pretrained_model = torch.load(pretrained_checkpoint)
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+/home/luca/Desktop/neuraln/task_vectors/src/utils.py:56: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model = torch.load(save_path)
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:53<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 97.84%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 90.14%
+  (0.5, 0.3)        97.8%    90.1%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 86.13%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 96.97%
+  (0.3, 0.5)        86.1%    97.0%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 96.91%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 96.43%
+  (0.5, 0.5)        96.9%    96.4%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 98.38%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:53<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 93.88%
+  (0.6, 0.4)        98.4%    93.9%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 91.38%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:53<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 97.36%
+  (0.4, 0.6)        91.4%    97.4%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 98.54%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 95.32%
+  (0.7, 0.5)        98.5%    95.3%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 93.72%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:53<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 97.36%
+  (0.5, 0.7)        93.7%    97.4%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 98.80%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:53<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 94.37%
+  (0.8, 0.5)        98.8%    94.4%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 90.02%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 97.45%
+  (0.5, 0.8)        90.0%    97.4%     0.46GB
+
+=======================================================
+  FASE 5 — NEGAZIONE τ_GTSRB (τ_SVHN rimane)
+=======================================================
+  neg_g α           GTSRB     SVHN    GPU Mem
+  --------------------------------------------
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 15.23%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:53<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 97.55%
+  α_neg=0.3         15.2%    97.6%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 9.83%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:53<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 97.14%
+  α_neg=0.5          9.8%    97.1%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 5.58%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 96.28%
+  α_neg=0.7          5.6%    96.3%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 2.98%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:53<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 93.46%
+  α_neg=1.0          3.0%    93.5%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 2.68%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 64.84%
+  α_neg=1.5          2.7%    64.8%     0.46GB
+
+=======================================================
+  FASE 6 — NEGAZIONE τ_SVHN (τ_GTSRB rimane)
+=======================================================
+  neg_s α           GTSRB     SVHN    GPU Mem
+  --------------------------------------------
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 98.94%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 23.39%
+  α_neg=0.3         98.9%    23.4%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 98.42%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 11.05%
+  α_neg=0.5         98.4%    11.1%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 96.54%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 7.16%
+  α_neg=0.7         96.5%     7.2%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 75.64%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 6.42%
+  α_neg=1.0         75.6%     6.4%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 395/395 [33:54<00:00,  5.15s/it]
+Done evaluating on GTSRB. Accuracy: 11.90%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 814/814 [1:09:52<00:00,  5.15s/it]
+Done evaluating on SVHN. Accuracy: 6.47%
+  α_neg=1.5         11.9%     6.5%     0.46GB
+
+============================================================
+  FASE 7a — NEGAZIONE τ_GTSRB sul BASE model
+  ℹ pretrained − α·τ_GTSRB | atteso: GTSRB << 43.3%
+============================================================
+  label               GTSRB     SVHN    GPU Mem
+  ----------------------------------------------
+/home/luca/Desktop/neuraln/task_vectors/src/task_vectors.py:52: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pretrained_model = torch.load(pretrained_checkpoint)
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+/home/luca/Desktop/neuraln/task_vectors/src/utils.py:56: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model = torch.load(save_path)
+/home/luca/miniconda3/envs/task-vectors/lib/python3.9/site-packages/torch/utils/data/dataloader.py:617: UserWarning: This DataLoader will create 16 worker processes in total. Our suggested max number of worker in current system is 8, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+100%|█████████████████████████████████████████████████████| 99/99 [34:14<00:00, 20.75s/it]
+Done evaluating on GTSRB. Accuracy: 11.96%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+/home/luca/miniconda3/envs/task-vectors/lib/python3.9/site-packages/torch/utils/data/dataloader.py:617: UserWarning: This DataLoader will create 16 worker processes in total. Our suggested max number of worker in current system is 8, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|█████████████████████████████████████████████████| 204/204 [1:10:30<00:00, 20.74s/it]
+Done evaluating on SVHN. Accuracy: 19.11%
+  α_neg=0.5           12.0%    19.1%     0.46GB
+/home/luca/Desktop/neuraln/task_vectors/src/task_vectors.py:52: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pretrained_model = torch.load(pretrained_checkpoint)
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+/home/luca/Desktop/neuraln/task_vectors/src/utils.py:56: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  model = torch.load(save_path)
+100%|█████████████████████████████████████████████████████| 99/99 [34:15<00:00, 20.76s/it]
+Done evaluating on GTSRB. Accuracy: 4.27%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|█████████████████████████████████████████████████| 204/204 [1:10:35<00:00, 20.76s/it]
+Done evaluating on SVHN. Accuracy: 15.25%
+  α_neg=1.0            4.3%    15.2%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████| 99/99 [34:15<00:00, 20.77s/it]
+Done evaluating on GTSRB. Accuracy: 2.23%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|█████████████████████████████████████████████████| 204/204 [1:10:35<00:00, 20.76s/it]
+Done evaluating on SVHN. Accuracy: 15.92%
+  α_neg=1.5            2.2%    15.9%     0.46GB
+
+============================================================
+  FASE 7b — NEGAZIONE τ_SVHN sul BASE model
+  ℹ pretrained − α·τ_SVHN | atteso: SVHN << 52.0%
+============================================================
+  label               GTSRB     SVHN    GPU Mem
+  ----------------------------------------------
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████| 99/99 [34:15<00:00, 20.76s/it]
+Done evaluating on GTSRB. Accuracy: 21.19%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|█████████████████████████████████████████████████| 204/204 [1:10:35<00:00, 20.76s/it]
+Done evaluating on SVHN. Accuracy: 6.50%
+  α_neg=0.5           21.2%     6.5%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████| 99/99 [34:14<00:00, 20.76s/it]
+Done evaluating on GTSRB. Accuracy: 6.03%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|█████████████████████████████████████████████████| 204/204 [1:10:35<00:00, 20.76s/it]
+Done evaluating on SVHN. Accuracy: 6.34%
+  α_neg=1.0            6.0%     6.3%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████| 99/99 [34:16<00:00, 20.77s/it]
+Done evaluating on GTSRB. Accuracy: 2.84%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|█████████████████████████████████████████████████| 204/204 [1:10:35<00:00, 20.76s/it]
+Done evaluating on SVHN. Accuracy: 6.27%
+  α_neg=1.5            2.8%     6.3%     0.46GB
+
+============================================================
+  FASE 8a — NEGAZIONE τ_GTSRB nel MULTI-TASK model
+  ℹ pretrained + τ_SVHN + (1−α)·τ_GTSRB | SVHN deve restare ~97%
+============================================================
+  label               GTSRB     SVHN    GPU Mem
+  ----------------------------------------------
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████| 99/99 [34:15<00:00, 20.77s/it]
+Done evaluating on GTSRB. Accuracy: 75.76%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|█████████████████████████████████████████████████| 204/204 [1:10:35<00:00, 20.76s/it]
+Done evaluating on SVHN. Accuracy: 97.50%
+  α_neg=0.5           75.8%    97.5%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████| 99/99 [34:15<00:00, 20.77s/it]
+Done evaluating on GTSRB. Accuracy: 28.65%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|█████████████████████████████████████████████████| 204/204 [1:10:35<00:00, 20.76s/it]
+Done evaluating on SVHN. Accuracy: 97.86%
+  α_neg=1.0           28.7%    97.9%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████| 99/99 [34:15<00:00, 20.76s/it]
+Done evaluating on GTSRB. Accuracy: 9.83%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|█████████████████████████████████████████████████| 204/204 [1:10:35<00:00, 20.76s/it]
+Done evaluating on SVHN. Accuracy: 97.14%
+  α_neg=1.5            9.8%    97.1%     0.46GB
+
+============================================================
+  FASE 8b — NEGAZIONE τ_SVHN nel MULTI-TASK model
+  ℹ pretrained + τ_GTSRB + (1−α)·τ_SVHN | GTSRB deve restare ~99%
+============================================================
+  label               GTSRB     SVHN    GPU Mem
+  ----------------------------------------------
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████| 99/99 [34:16<00:00, 20.77s/it]
+Done evaluating on GTSRB. Accuracy: 98.95%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|█████████████████████████████████████████████████| 204/204 [1:10:35<00:00, 20.76s/it]
+Done evaluating on SVHN. Accuracy: 91.19%
+  α_neg=0.5           99.0%    91.2%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████| 99/99 [34:15<00:00, 20.76s/it]
+Done evaluating on GTSRB. Accuracy: 99.17%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|█████████████████████████████████████████████████| 204/204 [1:10:35<00:00, 20.76s/it]
+Done evaluating on SVHN. Accuracy: 55.87%
+  α_neg=1.0           99.2%    55.9%     0.46GB
+Classification head for ViT-B-16 on GTSRB exists at checkpoints/ViT-B-16/head_GTSRB.pt
+Loading classification head from checkpoints/ViT-B-16/head_GTSRB.pt
+100%|█████████████████████████████████████████████████████| 99/99 [34:15<00:00, 20.77s/it]
+Done evaluating on GTSRB. Accuracy: 98.42%
+Classification head for ViT-B-16 on SVHN exists at checkpoints/ViT-B-16/head_SVHN.pt
+Loading classification head from checkpoints/ViT-B-16/head_SVHN.pt
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/train_32x32.mat
+Using downloaded and verified file: Desktop/neuraln/task_vectors/data$/svhn/test_32x32.mat
+100%|█████████████████████████████████████████████████| 204/204 [1:10:35<00:00, 20.76s/it]
+Done evaluating on SVHN. Accuracy: 11.05%
+  α_neg=1.5           98.4%    11.1%     0.46GB
+
+(task-vectors) luca@luca-Modern-15-A11SBL:~/Desktop/neuraln/task_vectors$

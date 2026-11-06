@@ -52,7 +52,10 @@ WEIGHTED_ALPHAS = [
     (0.5, 0.8),
 ]
 
-# Alpha per negazione (Fasi 5–8)
+# Alpha per negazione con àncora (Fasi 5–6) — griglia usata nel paper
+ANCHORED_NEGATION_ALPHAS = [0.3, 0.5, 0.7, 1.0, 1.5]
+
+# Alpha per negazione (Fasi 7–8)
 NEGATION_ALPHAS = [0.5, 1.0, 1.5]
 
 # ========== UTILITY ==========
@@ -123,7 +126,7 @@ if RUN_BASELINE:
 # ============================================================
 if RUN_ONLY_GTSRB:
     print_header("FASE 1 — SOLO τ_GTSRB × α",
-                 "Upper bound GTSRB | SVHN invariato (nessun contributo τ_SVHN)")
+                 "Upper bound GTSRB | misura anche l'effetto di τ_GTSRB su SVHN")
     for alpha in alphas:
         m = tv_gtsrb.apply_to(pretrained, scaling_coef=abs(alpha)) \
             if alpha >= 0 else \
@@ -137,7 +140,7 @@ if RUN_ONLY_GTSRB:
 # ============================================================
 if RUN_ONLY_SVHN:
     print_header("FASE 2 — SOLO τ_SVHN × α",
-                 "Upper bound SVHN | GTSRB invariato (nessun contributo τ_GTSRB)")
+                 "Upper bound SVHN | misura anche l'effetto di τ_SVHN su GTSRB")
     for alpha in alphas:
         m = tv_svhn.apply_to(pretrained, scaling_coef=abs(alpha)) \
             if alpha >= 0 else \
@@ -188,7 +191,7 @@ if RUN_WEIGHTED:
 if RUN_NEGATION_GTSRB:
     print_header("FASE 5 — τ_SVHN + (−τ_GTSRB×α)",
                  "Misura l'interferenza di τ_GTSRB su SVHN nel combinato")
-    for alpha in NEGATION_ALPHAS:
+    for alpha in ANCHORED_NEGATION_ALPHAS:
         torch.cuda.empty_cache()
         gc.collect()
         tv_neg_g = scale_tv(tv_svhn, 1.0) + scale_tv(tv_gtsrb, -alpha)
@@ -205,7 +208,7 @@ if RUN_NEGATION_GTSRB:
 if RUN_NEGATION_SVHN:
     print_header("FASE 6 — τ_GTSRB + (−τ_SVHN×α)",
                  "Misura l'interferenza di τ_SVHN su GTSRB nel combinato")
-    for alpha in NEGATION_ALPHAS:
+    for alpha in ANCHORED_NEGATION_ALPHAS:
         torch.cuda.empty_cache()
         gc.collect()
         tv_neg_s = scale_tv(tv_gtsrb, 1.0) + scale_tv(tv_svhn, -alpha)
@@ -291,7 +294,7 @@ print("\n" + "="*60)
 print("  ✅ ANALISI COMPLETA — 8 FASI")
 print()
 print("  Fase 0      → baseline zero-shot (riferimento assoluto)")
-print("  Fasi 1/2    → upper bound task singolo (no interferenza)")
+print("  Fasi 1/2    → upper bound task singolo + effetto sull'altro task")
 print("  Fase 3      → multi-task α unico → misuri l'interferenza")
 print("  Fase 4      → α indipendenti → tenti di ridurla")
 print("  Fasi 5/6    → combinazioni asimmetriche (analisi interferenza)")
